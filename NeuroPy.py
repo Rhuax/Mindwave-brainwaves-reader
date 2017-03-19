@@ -40,10 +40,6 @@ class NeuroPy(object):
         """starts packetparser in a separate thread"""
         self.threadRun = True
         self.srl = serial.Serial(self.__port, self.__baudRate)
-        f = open(self.person_name + '_' + self.task_name + '.csv', 'w')
-        f.write('Delta,Theta,LowAlpha,HighAlpha,LowBeta,HighBeta,')
-        f.write('LowGamma,MidGamma\n')
-        f.close()
         threading.Thread(target=self.__packetParser(self.srl)).start()
 
     def __packetParser(self, srl):
