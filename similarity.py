@@ -37,11 +37,11 @@ for i in range(n_waves):
     d = pydtw.dtw(matrix1_smooth[:][i], matrix2_smooth[:][i],
                   pydtw.Settings(dist='manhattan', step='dp2', window='nowindow',
                                  compute_path=True, norm=True))
-    p.plot(matrix1[:minValue][i])
-    p.plot(matrix2[:minValue][i])
-    p.show()
+    #p.plot(matrix1[:minValue][i])
+    #p.plot(matrix2[:minValue][i])
+    #p.show()
     correlation_vector[i] = d.get_dist()
-    d.plot_alignment()
+    #d.plot_alignment()
 
 print('Correlation for every brain wave:', end='')
 print(correlation_vector)
