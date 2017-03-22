@@ -1,16 +1,22 @@
 import numpy as np
+from cdtw import pydtw
+from matplotlib import pyplot as p
 
-matrix1 = np.genfromtxt('stefano_relax.csv', delimiter=',', dtype=int)
+matrix1 = np.genfromtxt('gianluca_relax.csv', delimiter=',', dtype=int)
 matrix2 = np.genfromtxt('michel_relax.csv', delimiter=',', dtype=int)
 
 n_waves = np.shape(matrix1)[1]
-correlation_vector=np.zeros(n_waves)
-i = 6
+correlation_vector = np.zeros(n_waves)
+
 minValue = np.min([np.shape(matrix1)[0], np.shape(matrix2)[0]])
 
 # Smooth values
-matrix1 = np.sqrt(matrix1)
-matrix2 = np.sqrt(matrix2)
+#matrix1_smooth = np.sqrt(matrix1[0:minValue][:])
+#matrix2_smooth = np.sqrt(matrix2[0:minValue][:])
+matrix1_smooth=matrix1[0:minValue][:]
+matrix2_smooth=matrix2[0:minValue][:]
+'''
+Old cross correlation code
 
 for i in range(n_waves):  # For every brain wave
     c_cor = np.correlate(matrix1[0:minValue][i], matrix2[0:minValue][i])
@@ -21,8 +27,23 @@ for i in range(n_waves):  # For every brain wave
 
 print('Correlation for every brain wave:',end='')
 print( correlation_vector)
-print('Average correlation value: ',end='')
-print(correlation_vector.mean())
+print('Average correlation value: ', end='')
+print(correlation_vector.mean())'''
 
 # print(np.correlate(matrix1[0:minValue][0], matrix1[0:minValue][0]))
 # print(np.correlate(matrix2[0:minValue][0], matrix2[0:minValue][0]))
+
+for i in range(n_waves):
+    d = pydtw.dtw(matrix1_smooth[:][i], matrix2_smooth[:][i],
+                  pydtw.Settings(dist='manhattan', step='dp2', window='nowindow',
+                                 compute_path=True, norm=True))
+    p.plot(matrix1[:minValue][i])
+    p.plot(matrix2[:minValue][i])
+    p.show()
+    correlation_vector[i] = d.get_dist()
+    d.plot_alignment()
+
+print('Correlation for every brain wave:', end='')
+print(correlation_vector)
+print('Average correlation value: ', end='')
+print(correlation_vector.mean())
