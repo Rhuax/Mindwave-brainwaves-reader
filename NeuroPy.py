@@ -23,10 +23,11 @@ class NeuroPy(object):
     __port = None
     __baudRate = None
     __history = None
-    threadRun = True  # controlls the running of thread
+    threadRun = True  # controls the running of thread
     callBacksDictionary = {}  # keep a track of all callbacks
 
     def __init__(self, port, person_name, task_name, task_duration, baudRate=57600):
+        np.set_printoptions(suppress=True)
         self.__port, self.__baudRate = port, baudRate
         self.person_name = person_name
         self.task_name = task_name
@@ -324,15 +325,15 @@ class NeuroPy(object):
     def updateHistory(self):
         if self.__history is None:  # create it
             self.__history = np.array([[self.delta, self.theta, self.lowAlpha, self.highAlpha, self.lowBeta,
-                                        self.highBeta, self.lowGamma, self.midGamma]])
+                                        self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation]])
         else:
-            np.append(self.__history, [[self.delta, self.theta, self.lowAlpha, self.highAlpha, self.lowBeta,
-                                        self.highBeta, self.lowGamma, self.midGamma]], axis=0)
+            self.__history=np.append(self.__history, [[self.delta, self.theta, self.lowAlpha, self.highAlpha, self.lowBeta,
+                                        self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation]], axis=0)
 
     '''Saves all read values to csv'''
 
     def save(self):
         print('Saving data...')
         np.savetxt(self.person_name + '_' + self.task_name + '_' + self.task_duration + ".csv", self.__history,
-                   delimiter=',')
+                   delimiter=',',fmt='%.3f')
         print('Saved')
