@@ -325,10 +325,12 @@ class NeuroPy(object):
     def updateHistory(self):
         if self.__history is None:  # create it
             self.__history = np.array([[self.delta, self.theta, self.lowAlpha, self.highAlpha, self.lowBeta,
-                                        self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation]])
+                                        self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation,
+                                        self.rawValue,self.blinkStrength]])
         else:
             self.__history=np.append(self.__history, [[self.delta, self.theta, self.lowAlpha, self.highAlpha, self.lowBeta,
-                                        self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation]], axis=0)
+                                        self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation,
+                                                       self.rawValue,self.blinkStrength]], axis=0)
 
     '''Saves all read values to csv'''
 
