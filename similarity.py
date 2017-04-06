@@ -2,13 +2,22 @@ import numpy as np
 from cdtw import pydtw
 from matplotlib import pyplot as p
 
-matrix1 = np.genfromtxt('stefn_newtest_10.csv', delimiter=',', dtype=int)
-matrix2 = np.genfromtxt('stefn_testnuovo_10.csv', delimiter=',', dtype=int)
+matrix1 = np.genfromtxt('records/gianluca_logica_200.csv', delimiter=',', dtype=int)
+matrix2 = np.genfromtxt('records/claudio_logica_200.csv', delimiter=',', dtype=int)
 
 n_waves = np.shape(matrix1)[1]
 correlation_vector = np.zeros(n_waves)
 
 minValue = np.min([np.shape(matrix1)[0], np.shape(matrix2)[0]])
+#15540 ril
+#6627
+#46644
+
+#13130
+#23815
+#30386
+#61583
+
 
 # Smooth values
 #matrix1_smooth = np.sqrt(matrix1[0:minValue][:])
@@ -41,7 +50,7 @@ for i in range(n_waves):
     #p.plot(matrix2[:minValue][i])
     #p.show()
     correlation_vector[i] = d.get_dist()
-    d.plot_alignment()
+    #d.plot_alignment()
 
 print('Correlation for every brain wave:', end='')
 print(correlation_vector)

@@ -151,7 +151,6 @@ class NeuroPy(object):
                             self.midGamma = val0 * 65536 + val1 * 256 + int(payload[i], 16)
 
                             self.updateHistory()
-                            #self.print_value()
                         i += 1
 
     def stop(self):
