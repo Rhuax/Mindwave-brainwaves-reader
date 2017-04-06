@@ -151,6 +151,7 @@ class NeuroPy(object):
                             self.midGamma = val0 * 65536 + val1 * 256 + int(payload[i], 16)
 
                             self.updateHistory()
+                            #self.print_value()
                         i += 1
 
     def stop(self):
@@ -320,6 +321,9 @@ class NeuroPy(object):
         if "blinkStrength" in self.callBacksDictionary:  # if callback has been set, execute the function
             self.callBacksDictionary["blinkStrength"](self.__blinkStrength)
 
+
+
+
     '''Appends the most recent read values to a local array'''
 
     def updateHistory(self):
@@ -333,9 +337,8 @@ class NeuroPy(object):
                                                        self.rawValue,self.blinkStrength]], axis=0)
 
     '''Saves all read values to csv'''
-
     def save(self):
         print('Saving data...')
-        np.savetxt(self.person_name + '_' + self.task_name + '_' + self.task_duration + ".csv", self.__history,
+        np.savetxt('records/'+self.person_name + '_' + self.task_name + '_' + self.task_duration + ".csv", self.__history,
                    delimiter=',',fmt='%.3f')
         print('Saved')

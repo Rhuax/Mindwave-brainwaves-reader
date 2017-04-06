@@ -6,6 +6,10 @@ def stoppa(a):
     a.stop()
     a.save()
 
+#Rilassamento 438 secs
+#Musica metal 200 secs
+#Logica 200
+#Memoria 200
 
 person_name = input('Nome dell\'utente: ')
 task_name = input('Nome del task: ')
