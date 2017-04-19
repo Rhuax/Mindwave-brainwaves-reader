@@ -10,7 +10,13 @@ tasks=['logica','memoria','musica_metal','rilassamento']
 for item in tasks:
     guyzz=None #Build an array of csv for every person
     for filename in os.listdir("records/"):
-        if item in filename:
+        if 'logica' in filename:
+            if guyzz is None:
+                guyzz=[]
+                guyzz.append(np.array(np.genfromtxt('records/'+filename,delimiter=',',dtype=None)))
+            else:
+                guyzz.append(np.genfromtxt('records/'+filename,delimiter=',',dtype=None))
+        if 'memoria' in filename:
             if guyzz is None:
                 guyzz=[]
                 guyzz.append(np.array(np.genfromtxt('records/'+filename,delimiter=',',dtype=None)))
