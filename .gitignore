@@ -48,3 +48,4 @@ Temporary Items
 
 /__pycache__
 /.idea
+*.xml
