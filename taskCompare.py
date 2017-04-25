@@ -5,20 +5,15 @@ import numpy as np
 import itertools
 np.set_printoptions(linewidth=250)
 
-tasks=['logica','memoria','musica_metal','rilassamento']
+names = ['stefano','roberta','angelo','claudio','gianluca','michel',
+       'asia','emanuele','milad','giulia','mirella','monica','fabiola']
 
-for item in tasks:
-    guyzz=None #Build an array of csv for every person
+for name in names:
+    guyzz = None #Build an array of csv for every person
     for filename in os.listdir("records/"):
-        if 'logica' in filename:
+        if name in filename:
             if guyzz is None:
-                guyzz=[]
-                guyzz.append(np.array(np.genfromtxt('records/'+filename,delimiter=',',dtype=None)))
-            else:
-                guyzz.append(np.genfromtxt('records/'+filename,delimiter=',',dtype=None))
-        if 'memoria' in filename:
-            if guyzz is None:
-                guyzz=[]
+                guyzz = []
                 guyzz.append(np.array(np.genfromtxt('records/'+filename,delimiter=',',dtype=None)))
             else:
                 guyzz.append(np.genfromtxt('records/'+filename,delimiter=',',dtype=None))
@@ -32,14 +27,14 @@ for item in tasks:
     matrix=np.zeros([np.shape(guyzz)[0],np.shape(guyzz)[0]])
     for i in comb:
         correlation_vector=0
-        firstguy=guyzz[i[0]]
-        secondguy=guyzz[i[1]]
-        minValue= np.min([np.shape(firstguy)[0],np.shape(secondguy)[0]])
-        firstguy2=firstguy[0:minValue][:]
-        secondguy2=secondguy[0:minValue][:] #trim the fuck out
+        firsttask=guyzz[i[0]]
+        secondtask=guyzz[i[1]]
+        minValue= np.min([np.shape(firsttask)[0],np.shape(secondtask)[0]])
+        firsttask2=firsttask[0:minValue][:]
+        secondtask2=secondtask[0:minValue][:]
 
         for waves in range(n_waves):
-            d= pydtw.dtw(firstguy[:][waves], secondguy[:][waves],
+            d= pydtw.dtw(firsttask[:][waves], secondtask[:][waves],
                          pydtw.Settings(dist='manhattan',step='dp2',window='nowindow',
                                         compute_path=True,norm=True))
             correlation_vector+=d.get_dist()
@@ -47,6 +42,6 @@ for item in tasks:
         correlation_vector/=n_waves
         matrix[i[0]][i[1]]=correlation_vector
 
-    print(item+":")
+    print(name + " : ")
     print(matrix)
     print('---------------')
