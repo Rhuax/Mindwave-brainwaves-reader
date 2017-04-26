@@ -37,3 +37,8 @@ for file in os.listdir('records/'):
 
 np.savetxt('ioio.csv',dataset,delimiter=',',fmt='%.3f')
 
+#
+# npersone x ntask x onde righe
+# punti+[persona,onda,task]
+#
+
