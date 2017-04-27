@@ -1,0 +1,6 @@
+import numpy as n
+
+a=n.genfromtxt('eegdataset_inf.csv',delimiter=',')
+
+a=n.insert(a,0,range(440),axis=0)
+n.savetxt('eegdataset_infc.csv',a,delimiter=',',fmt='%.3f')
