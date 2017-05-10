@@ -9,7 +9,7 @@ from sklearn.decomposition import PCA
 waves = pd.read_csv('preprocessed/eeg.csv', sep = ',')
 labels = waves['Task']
 training = waves.drop(labels = 'Task', axis = 1)
-labels = labels.values
+labels = labels.DataFrame.as_matrix()
 training = training.values
 
 #Model definition
