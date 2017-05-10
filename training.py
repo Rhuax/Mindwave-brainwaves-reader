@@ -21,3 +21,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics = ['acc
 model.fit(training, labels, epochs=500, batch_size=10)
 scores = model.evaluate(training, labels)
 print("\n%s: %.2f%%" % (model.metrics_names[1], scores[1]*100))
+
+
+
+
