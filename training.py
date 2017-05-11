@@ -3,8 +3,8 @@ import numpy as np
 from keras.layers import LSTM,Dense,Dropout
 from keras.models import Sequential
 
-
-epochs=10
+np.set_printoptions(linewidth=200)
+epochs=1
 dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
 
 
@@ -66,7 +66,7 @@ It builds the network, defining its structure
 """
 def create_model():
     model=Sequential()
-    model.add(LSTM(11,stateful=True,return_sequences=True,input_shape=(None,11),batch_size=5))
+    model.add(LSTM(11,stateful=True,return_sequences=True,batch_input_shape=(1,5,11)))
     model.add(LSTM(11,return_sequences=True))
     model.add(Dropout(0.3))
     model.add(LSTM(11))
@@ -79,6 +79,8 @@ def create_model():
 max_length,sequences=calculate_max_sequence_length(dataset)
 sequences_indices=create_array_task(dataset,sequences=sequences)
 
+
+batch_size=5
 network=create_model()
 print('Compiling model..')
 network.compile(optimizer='rmsprop',loss='categorical_crossentropy')
@@ -87,13 +89,27 @@ network.summary()
 for e in range(epochs):
     current_sequence=0
     for seq in range(sequences-1):
+        print('sequenza'+str(current_sequence))
         start=sequences_indices[current_sequence]
         end=sequences_indices[current_sequence+1]
         Train=dataset[start:end]
-        #Split the sequence in batches of 5 instances
-        for batch in np.split(Train,5,axis=0):
-            X_Train=batch[:][0:-4]
-            Y_Train=batch[:][-4:]
-
+        y_true=np.reshape(Train[0][-4:],(1,4))
+        j=0
+        err=0
+        while(j<(end-start)/5):
+            batch_x = Train[j * batch_size:(j + 1) * batch_size,0:-4]
+            batch_x = np.expand_dims(batch_x, 0)
+            loss=network.train_on_batch(batch_x,y_true)
+            err+=loss
+            """print('loss on batch '+str(j),end=' ')
+            print(':'+str(loss))"""
+            j+=1
+        print('errore medio per questa sequenza '+str(err/((end-start)/5)))
         network.reset_states()
         current_sequence+=1
+
+f=open('architecture','w')
+f.write(network.to_json())
+f.close()
+network.save('network.h5')
+
