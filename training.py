@@ -1,8 +1,11 @@
 import numpy as np
 
-#from keras.layers import LSTM
+from keras.layers import LSTM,Dense
+from keras.models import Sequential
 
 dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
+
+
 
 def calculate_max_sequence_length(dataset):
     max_seq_length = 0
@@ -23,9 +26,9 @@ def calculate_max_sequence_length(dataset):
     return max_seq_length, seqs
 
 
-def create_array_task(dataset):
+def create_array_task(dataset,sequences):
     current_output = dataset[0][-4:]
-    array_task = np.zeros(52)
+    array_task = np.zeros(sequences)
     line = 0
     i = 1
     for row in dataset:
@@ -38,9 +41,15 @@ def create_array_task(dataset):
         line += 1
     return array_task
 
-print(calculate_max_sequence_length(dataset))
-
 """
 It builds the network, defining its structure
 """
-print(create_array_task(dataset))
+def create_model():
+    model=Sequential()
+    model.add(LSTM(11,return_sequences=True))
+
+
+
+
+max_length,sequences=calculate_max_sequence_length(dataset)
+sequences_indices=create_array_task(dataset,sequences=sequences)
