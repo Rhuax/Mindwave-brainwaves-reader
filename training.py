@@ -72,10 +72,15 @@ for e in range(epochs):
     for seq in range(sequences-1):
         start=sequences_indices[current_sequence]
         end=sequences_indices[current_sequence+1]
-        X_train=dataset[start:end][0:-4]
-        Y_train=dataset[start:end][-4:]
+        Train=dataset[start:end]
         #Split the sequence in batches of 5 instances
+        for batch in np.split(Train,5,axis=0):
+            X_Train=batch[:][0:-4]
+            Y_Train=batch[:][-4:]
 
+
+
+        network.reset_states()
 
 
 
