@@ -57,8 +57,8 @@ def k_fold_CV(dataset, folds):
 
 train, val = k_fold_CV(dataset, 10)
 for i in range(1, 11):
-    np.savetxt('cross_correlation/training_'+str(i)+'.csv', train[i], fmt='%i', delimiter=',')
-    np.savetxt('cross_correlation/testing_'+str(i)+'.csv', val[i], fmt='%i', delimiter=',')
+    np.savetxt('cross_validation/training_'+str(i)+'.csv', train[i], fmt='%i', delimiter=',')
+    np.savetxt('cross_validation/testing_'+str(i)+'.csv', val[i], fmt='%i', delimiter=',')
 
 
 """
