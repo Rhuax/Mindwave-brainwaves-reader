@@ -6,7 +6,6 @@ from keras.models import Sequential
 dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
 
 
-
 def calculate_max_sequence_length(dataset):
     max_seq_length = 0
     cur_seq_length = 0
@@ -40,6 +39,8 @@ def create_array_task(dataset,sequences):
             current_output = actual
         line += 1
     return array_task
+
+print(create_array_task(dataset, 52))
 
 """
 It builds the network, defining its structure
