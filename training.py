@@ -1,8 +1,10 @@
 import numpy as np
 
-from keras.layers import LSTM,Dense
+from keras.layers import LSTM,Dense,Dropout
 from keras.models import Sequential
 
+
+epochs=10
 dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
 
 
@@ -28,7 +30,7 @@ def calculate_max_sequence_length(dataset):
 
 def create_array_task(dataset,sequences):
     current_output = dataset[0][-4:]
-    array_task = np.zeros(sequences)
+    array_task = np.zeros(sequences,dtype=np.int32)
     line = 0
     i = 1
     for row in dataset:
@@ -46,10 +48,34 @@ It builds the network, defining its structure
 """
 def create_model():
     model=Sequential()
+    model.add(LSTM(11,stateful=True,return_sequences=True,input_shape=(None,11),batch_size=5))
     model.add(LSTM(11,return_sequences=True))
+    model.add(Dropout(0.3))
+    model.add(LSTM(11))
+    model.add(Dense(4,activation='softmax'))
+    return model
 
 
 
 
 max_length,sequences=calculate_max_sequence_length(dataset)
 sequences_indices=create_array_task(dataset,sequences=sequences)
+
+network=create_model()
+print('Compiling model..')
+network.compile(optimizer='rmsprop',loss='categorical_crossentropy')
+print('Model compiled. Specs:')
+network.summary()
+for e in range(epochs):
+    current_sequence=0
+    for seq in range(sequences-1):
+        start=sequences_indices[current_sequence]
+        end=sequences_indices[current_sequence+1]
+        X_train=dataset[start:end][0:-4]
+        Y_train=dataset[start:end][-4:]
+        #Split the sequence in batches of 5 instances
+
+
+
+
+        current_sequence+=1
