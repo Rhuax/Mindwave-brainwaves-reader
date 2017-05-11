@@ -16,7 +16,7 @@ np.set_printoptions(linewidth=250)
 
 
 
-for file in os.listdir('records/'):
+for file in sorted(os.listdir('records/')):
     matrix=np.array(np.genfromtxt('records/' + file, delimiter=',', dtype=None))
     matrix=np.delete(matrix,-1,1) #Remove the blink column
     desired_output=np.zeros(4)

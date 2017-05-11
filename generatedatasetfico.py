@@ -12,9 +12,9 @@ dataset.fill(-n.inf)
 index=0
 
 
-
+import glob
 for name in names:
-    for filename in os.listdir('records/'):
+    for filename in sorted(os.listdir('records/')):
         if name in filename:
             name_index=names.index(name)
             task_index=None
