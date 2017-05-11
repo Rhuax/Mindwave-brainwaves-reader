@@ -42,7 +42,7 @@ def create_array_task(dataset,sequences):
         line += 1
     return array_task
 
-print(create_array_task(dataset, 52))
+
 
 """
 It builds the network, defining its structure
