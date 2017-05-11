@@ -51,6 +51,5 @@ Temporary Items
 *.xml
 
 .git/
-.idea/
-.idea/Mindwave-brainwaves-reader.iml
+.idea
 *.xml
