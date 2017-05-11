@@ -2,7 +2,6 @@ import numpy as np
 
 #from keras.layers import LSTM
 
-
 dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
 
 def calculate_max_sequence_length(dataset):
@@ -30,11 +29,12 @@ def create_array_task(dataset):
     line = 0
     i = 1
     for row in dataset:
-        o = row[-4:]
-        if not np.array_equal(o, current_output):
+        actual = row[-4:]
+
+        if not np.array_equal(actual, current_output):
             array_task[i] = line
             i += 1
-            current_output=o
+            current_output = actual
         line += 1
     return array_task
 
