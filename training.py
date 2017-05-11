@@ -1,6 +1,6 @@
 import numpy as np
 
-from keras.layers import LSTM
+#from keras.layers import LSTM
 
 
 dataset=np.genfromtxt('ioio.csv',delimiter=',',dtype=np.int32)
@@ -30,18 +30,20 @@ def calculate_max_sequence_length(dataset):
 
 def create_array_task(dataset):
     current_output = dataset[0][-4:]
-    array_task = []
+    array_task = np.zeros(51)
     line = 0
     i = 0
     for row in dataset:
         o = row[-4:]
-        line += 1
+
         if not np.array_equal(o, current_output):
             array_task[i] = line
             i += 1
+            current_output=o
+        line += 1
     return array_task
 
-print(calculate_max_sequence_length(dataset))
+#print(calculate_max_sequence_length(dataset))
 
 """
 It builds the network, defining its structure
