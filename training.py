@@ -3,9 +3,6 @@ import numpy as np
 #from keras.layers import LSTM
 
 
-dataset=np.genfromtxt('ioio.csv',delimiter=',',dtype=np.int32)
-
-
 dataset = np.genfromtxt('ioio.csv',delimiter=',',dtype=np.int32)
 
 
