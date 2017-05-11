@@ -35,7 +35,7 @@ for file in sorted(os.listdir('records/')):
     else:
         dataset=np.append(dataset,matrix,axis=0)
 
-np.savetxt('ioio.csv',dataset,delimiter=',',fmt='%.3f')
+np.savetxt('ioio.csv',dataset,delimiter=',',fmt='%i')
 
 #
 # npersone x ntask x onde righe

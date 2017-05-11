@@ -27,7 +27,7 @@ def calculate_max_sequence_length(dataset):
     return max_seq_length, seqs
 
 
-def create_array_task(dataset,sequences):
+def create_array_task(dataset, sequences):
     current_output = dataset[0][-4:]
     array_task = np.zeros(sequences,dtype=np.int32)
     line = 0
@@ -42,6 +42,23 @@ def create_array_task(dataset,sequences):
         line += 1
     return array_task
 
+def k_fold_CV(dataset, folds):
+    folds += 1
+    fold_len = int(len(dataset)/folds)
+    train_all = [[0 for x in range(folds)] for y in range(len(dataset)-fold_len)]
+    validate_all = [[0 for x in range(folds)] for y in range(fold_len)]
+    for i in range(1,folds):
+        val_start = i*fold_len
+        val_end = (i+1)*fold_len
+        train_all[i][:val_start] = dataset[:val_start-1]
+        train_all[i][val_start+1:] = dataset[val_end+1:]
+        validate_all[i] = dataset[val_start:val_end]
+    return train_all, validate_all
+
+train, val = k_fold_CV(dataset, 10)
+for i in range(1, 11):
+    np.savetxt('cross_correlation/training_'+str(i)+'.csv', train[i], fmt='%i', delimiter=',')
+    np.savetxt('cross_correlation/testing_'+str(i)+'.csv', val[i], fmt='%i', delimiter=',')
 
 
 """
@@ -78,10 +95,5 @@ for e in range(epochs):
             X_Train=batch[:][0:-4]
             Y_Train=batch[:][-4:]
 
-
-
         network.reset_states()
-
-
-
         current_sequence+=1
