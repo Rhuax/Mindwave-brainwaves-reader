@@ -49,6 +49,20 @@ def k_fold_CV(dataset, folds):
     train_all = [[0 for x in range(folds)] for y in range(len(dataset) - fold_len)]
     validate_all = [[0 for x in range(folds)] for y in range(fold_len)]
     for i in range(1, folds):
+<<<<<<< HEAD
+        val_start = i * fold_len
+        val_end = (i + 1) * fold_len
+        train_all[i][:val_start] = dataset[:val_start - 1]
+        train_all[i][val_start + 1:] = dataset[val_end + 1:]
+        validate_all[i] = dataset[val_start:val_end]
+    return train_all, validate_all
+
+
+train, val = k_fold_CV(dataset, 10)
+for i in range(1, 11):
+    np.savetxt('cross_validation/training_' + str(i) + '.csv', train[i], fmt='%i', delimiter=',')
+    np.savetxt('cross_validation/testing_' + str(i) + '.csv', val[i], fmt='%i', delimiter=',')
+=======
         val_start = i*fold_len
         val_end = (i+1)*fold_len
         train_all[i][:val_start] = dataset[:val_start-1]
@@ -60,7 +74,7 @@ def k_fold_CV(dataset, folds):
 #for i in range(1, 11):
 #    np.savetxt('cross_validation/training_'+str(i)+'.csv', train[i], fmt='%i', delimiter=',')
 #    np.savetxt('cross_validation/testing_'+str(i)+'.csv', val[i], fmt='%i', delimiter=',')
-
+>>>>>>> a98c717b195a4798e6624d61dd2a155aadd3f4be
 
 """
 It builds the network, defining its structure
