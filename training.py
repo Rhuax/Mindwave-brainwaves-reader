@@ -47,7 +47,7 @@ def k_fold_CV(dataset, folds):
     fold_len = int(len(dataset)/folds)
     train_all = [[0 for x in range(folds)] for y in range(len(dataset)-fold_len)]
     validate_all = [[0 for x in range(folds)] for y in range(fold_len)]
-    for i in range(1,folds):
+    for i in range(1, folds):
         val_start = i*fold_len
         val_end = (i+1)*fold_len
         train_all[i][:val_start] = dataset[:val_start-1]
@@ -55,11 +55,10 @@ def k_fold_CV(dataset, folds):
         validate_all[i] = dataset[val_start:val_end]
     return train_all, validate_all
 
-train, val = k_fold_CV(dataset, 10)
-for i in range(1, 11):
-    np.savetxt('cross_validation/training_'+str(i)+'.csv', train[i], fmt='%i', delimiter=',')
-    np.savetxt('cross_validation/testing_'+str(i)+'.csv', val[i], fmt='%i', delimiter=',')
-
+#train, val = k_fold_CV(dataset, 10)
+#for i in range(1, 11):
+#    np.savetxt('cross_validation/training_'+str(i)+'.csv', train[i], fmt='%i', delimiter=',')
+#    np.savetxt('cross_validation/testing_'+str(i)+'.csv', val[i], fmt='%i', delimiter=',')
 
 """
 It builds the network, defining its structure
