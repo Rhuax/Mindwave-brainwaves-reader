@@ -5,7 +5,7 @@ from keras.models import Sequential
 from keras.optimizers import RMSprop, SGD, Adam
 
 np.set_printoptions(linewidth=200)
-epochs = 10
+epochs = 5
 dataset = np.genfromtxt('eegdataset.csv', delimiter=',', dtype=np.int32)
 
 
@@ -69,12 +69,13 @@ It builds the network, defining its structure
 
 def create_model():
     model = Sequential()
-    model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, 5, 11)))
+    model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, 1, 11)))
     model.add(LSTM(11, return_sequences=True))
-    # model.add(Dropout(.2))
+    model.add(Dropout(.1))
     model.add(LSTM(11, return_sequences=True))
-    # model.add(Dropout(.2))
-    model.add(LSTM(6))
+    model.add(Dropout(.1))
+    model.add(LSTM(11))
+    model.add(Dense(6))
     model.add(Dense(4, activation='softmax'))
     return model
 
@@ -96,7 +97,7 @@ def calculate_accuracy(set, model):
 
         k = 0
         true_positives=0
-        while k < (enda - starta) / 5:
+        while k < (enda - starta) / batch_size:
             batch_x = np.expand_dims(set[starta+k * batch_size:starta+((k + 1) * batch_size), 0:-4],0)
             output=model.predict_on_batch(batch_x)
             r_output=np.zeros((1,4))
@@ -105,12 +106,12 @@ def calculate_accuracy(set, model):
                 true_positives+=1
 
             k += 1
-        print('accuracy : ',end='')
+        #print('accuracy : ',end='')
         total_accuracy+=true_positives/((enda-starta)/5)
         model.reset_states()
         current_sequence_test+=1
-    print('accuratezza sul test set: ',end='')
-    print(total_accuracy/n_test_sequences)
+
+    return total_accuracy/n_test_sequences
 
 max_length, sequences = calculate_max_sequence_length(dataset)
 sequences_indices = create_array_task(dataset, sequences=sequences)
@@ -120,7 +121,7 @@ dataset = dataset[:sequences_indices[-8]]
 
 max_length, sequences = calculate_max_sequence_length(dataset)
 
-batch_size = 5
+batch_size = 1
 network = create_model()
 print('Compiling model..')
 opt = RMSprop(lr=0.0005)
@@ -128,7 +129,9 @@ network.compile(optimizer=opt, loss='categorical_crossentropy',
                 metrics=['accuracy'])
 print('Model compiled. Specs:')
 network.summary()
+"""
 
+Simple train-test
 for e in range(epochs):
     current_sequence = 0
     epoch_accuracy = 0
@@ -148,8 +151,8 @@ for e in range(epochs):
             # print('Accuracy: '+str(accuracy))
             err += loss
             acc += accuracy
-            """print('loss on batch '+str(j),end=' ')
-            print(':'+str(loss))"""
+            #print('loss on batch '+str(j),end=' ')
+            #print(':'+str(loss))
             j += 1
         # print('errore medio per questa sequenza '+str(err/((end-start)/5)))
         epoch_accuracy += acc / ((end - start) / 5)
@@ -158,6 +161,52 @@ for e in range(epochs):
         current_sequence += 1
     print('accuratezza media per ques\'epoca sul training set: ' + str(epoch_accuracy / sequences))
     calculate_accuracy(test_set,network)
+"""
+
+"""
+K-fold cross validation training
+"""
+
+for i in range(11):
+    network = create_model()
+
+    opt = RMSprop(lr=0.0005)
+    network.compile(optimizer=opt, loss='categorical_crossentropy',
+                metrics=['accuracy'])
+    print('Fold number: '+str(i))
+    X = np.genfromtxt('cross_validation/training_' + str(i) + '.csv', delimiter=',',dtype=np.int32)
+    Y = np.genfromtxt('cross_validation/testing_' + str(i) + '.csv', delimiter=',',dtype=np.int32)
+    for e in range(epochs):
+        current_sequence = 0
+        epoch_accuracy = 0
+        print('Epoch :'+str(e))
+        max_length, sequences = calculate_max_sequence_length(X)
+        for seq in range(sequences - 1):
+            # print('sequenza'+str(current_sequence))
+            start = sequences_indices[current_sequence]
+            end = sequences_indices[current_sequence + 1]
+            Train = X[start:end]
+            y_true = np.reshape(Train[0][-4:], (1, 4))
+            j = 0
+            err = 0
+            acc = 0
+            while (j < (end - start) / batch_size):
+                batch_x = Train[j * batch_size:(j + 1) * batch_size, 0:-4]
+                batch_x = np.expand_dims(batch_x, 0)
+                loss, accuracy = network.train_on_batch(batch_x, y_true)
+                # print('Accuracy: '+str(accuracy))
+                err += loss
+                acc += accuracy
+                # print('loss on batch '+str(j),end=' ')
+                # print(':'+str(loss))
+                j += 1
+            # print('errore medio per questa sequenza '+str(err/((end-start)/5)))
+            epoch_accuracy += acc / ((end - start) / batch_size)
+            # print('accuratezza media per questa sequenza '+str(acc/((end-start)/5)))
+            network.reset_states()
+            current_sequence += 1
+        print('accuratezza media per ques\'epoca sul training set: ' + str(epoch_accuracy / sequences))
+        print('accuratezza sul test set :'+str(calculate_accuracy(Y, network)))
 
 f = open('architecture', 'w')
 f.write(network.to_json())
