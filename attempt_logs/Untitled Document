@@ -1,0 +1,40 @@
+rmsprop 0.001 lr
+
+11 x 11 x dropout .3 x 4 <-- accuratezza al massimo 0.5
+11 x11 x dropout .2 x 11 x dropout .2 x 6 x 4 <--- picco di .61 alla seconda epoca ma poi in diminuzione fino a .33
+
+adam 0.001 lr
+
+fa cacare al cazzo
+
+accuratezza media per ques'epoca: 0.232934763192
+accuratezza media per ques'epoca: 0.256014762558
+accuratezza media per ques'epoca: 0.239285556115
+accuratezza media per ques'epoca: 0.234888624167
+accuratezza media per ques'epoca: 0.246690360613
+accuratezza media per ques'epoca: 0.249157035627
+accuratezza media per ques'epoca: 0.250176091962
+accuratezza media per ques'epoca: 0.257485420631
+accuratezza media per ques'epoca: 0.264370606434
+accuratezza media per ques'epoca: 0.273273537997
+
+
+rmsprop 0.0005 lr
+
+
+11 x11  x 11 x 6 x 4
+
+holy shieet
+
+
+accuratezza media per ques'epoca: 0.361304490092
+accuratezza media per ques'epoca: 0.560745913289
+accuratezza media per ques'epoca: 0.695233611877
+accuratezza media per ques'epoca: 0.770696173748
+accuratezza media per ques'epoca: 0.843404298437
+accuratezza media per ques'epoca: 0.84473836563
+accuratezza media per ques'epoca: 0.849191670414
+accuratezza media per ques'epoca: 0.838485974388
+accuratezza media per ques'epoca: 0.816029396553
+accuratezza media per ques'epoca: 0.821772443682
+
