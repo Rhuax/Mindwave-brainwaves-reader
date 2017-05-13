@@ -7,7 +7,7 @@ from keras.optimizers import RMSprop, SGD, Adam
 np.set_printoptions(linewidth=200)
 epochs = 5
 
-batch_size = 1
+batch_size = 5
 dataset = np.genfromtxt('eegdataset.csv', delimiter=',', dtype=np.int32)
 
 
@@ -20,7 +20,7 @@ def calculate_max_sequence_length(dataset):
         o = row[-4:]
         if not np.array_equal(o, current_output):
             seqs += 1
-            if cur_seq_length > max_seq_length:
+            if cur_seq_length > max_seq_length: 
                 max_seq_length = cur_seq_length
             current_output = o
             cur_seq_length = 1
@@ -71,7 +71,7 @@ It builds the network, defining its structure
 
 def create_model():
     model = Sequential()
-    model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, 1, 11)))
+    model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
     model.add(LSTM(11, return_sequences=True))
     model.add(Dropout(.1))
     model.add(LSTM(11, return_sequences=True))
