@@ -6,6 +6,8 @@ from keras.optimizers import RMSprop, SGD, Adam
 
 np.set_printoptions(linewidth=200)
 epochs = 5
+
+batch_size = 1
 dataset = np.genfromtxt('eegdataset.csv', delimiter=',', dtype=np.int32)
 
 
@@ -107,7 +109,7 @@ def calculate_accuracy(set, model):
 
             k += 1
         #print('accuracy : ',end='')
-        total_accuracy+=true_positives/((enda-starta)/5)
+        total_accuracy+=true_positives/((enda-starta)/batch_size)
         model.reset_states()
         current_sequence_test+=1
 
@@ -121,7 +123,6 @@ dataset = dataset[:sequences_indices[-8]]
 
 max_length, sequences = calculate_max_sequence_length(dataset)
 
-batch_size = 1
 network = create_model()
 print('Compiling model..')
 opt = RMSprop(lr=0.0005)
