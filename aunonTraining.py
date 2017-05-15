@@ -186,8 +186,8 @@ for i in range(11):
         max_length, sequences = calculate_max_sequence_length(X)
         for seq in range(sequences - 1):
             # print('sequenza'+str(current_sequence))
-            start = sequences_indices[current_sequence]
-            end = sequences_indices[current_sequence + 1]
+            start = sequences_indices[current_sequence]     #324 * seqnum
+            end = sequences_indices[current_sequence + 1]   #324 + 2500
             Train = X[start:end]
             y_true = np.reshape(Train[0][-5:], (1, 5))
             j = 0
