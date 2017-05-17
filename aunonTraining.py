@@ -4,6 +4,22 @@ from keras.layers import LSTM, Dense, Dropout
 from keras.models import Sequential
 from keras.optimizers import RMSprop, SGD, Adam
 
+"""
+65 sequenze per il task ,1.000,0.000,0.000,0.000,0.000
+
+"""
+
+
+
+
+
+
+
+
+
+
+
+
 np.set_printoptions(linewidth=200)
 epochs = 5
 

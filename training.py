@@ -20,7 +20,7 @@ def calculate_max_sequence_length(dataset):
         o = row[-4:]
         if not np.array_equal(o, current_output):
             seqs += 1
-            if cur_seq_length > max_seq_length: 
+            if cur_seq_length > max_seq_length:
                 max_seq_length = cur_seq_length
             current_output = o
             cur_seq_length = 1
