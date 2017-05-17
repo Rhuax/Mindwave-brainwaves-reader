@@ -104,7 +104,7 @@ def calculate_accuracy(set, model):
         total_accuracy += true_positives/(sequence_length/batch_size)
         model.reset_states()
 
-    return total_accuracy /( np.shape(set)[0]/sequence_length)
+    return total_accuracy /( np.shape(set)[0])
 
 
 sequences = calculate_sequences(dataset)
