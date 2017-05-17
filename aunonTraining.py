@@ -5,7 +5,9 @@ from keras.models import Sequential
 from keras.optimizers import RMSprop, SGD, Adam
 
 """
-65 sequenze per il task ,1.000,0.000,0.000,0.000,0.000
+sequenze per ogni task
+[ 65.  65.  64.  65.  65.]
+il terzo task ha 64 sequenze
 
 """
 
