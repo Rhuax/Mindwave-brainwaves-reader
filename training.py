@@ -77,7 +77,7 @@ def create_model():
     model.add(LSTM(11, return_sequences=True))
     model.add(Dropout(.1))
     model.add(LSTM(11))
-    model.add(Dense(6))
+    model.add(Dense(8))
     model.add(Dense(4, activation='softmax'))
     return model
 
