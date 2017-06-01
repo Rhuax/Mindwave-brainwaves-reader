@@ -116,3 +116,5 @@ accuratezza media per l'epoca 0 sul training set: 0.881245321091
 accuratezza sul test set :0.25---------------------
 accuratezza media per l'epoca 1 sul training set: 0.85935290312
 accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 2 sul training set: 0.83379574857
+accuratezza sul test set :0.25---------------------
