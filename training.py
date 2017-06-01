@@ -191,7 +191,7 @@ K-fold cross validation training
 final_accuracy = 0
 for i in range(11):
     f = open('tuning_logs/' + log_name + '.txt', 'a')
-    f.write('Fold ' + str(i))
+    f.write('\nFold ' + str(i))
     f.close()
     network = create_model()
 
@@ -232,8 +232,8 @@ for i in range(11):
             current_sequence += 1
         acctrain = epoch_accuracy / sequences
         acctest = calculate_accuracy(Y, network)
-        acc_train = 'accuratezza media per l\'epoca ' + str(e) + ' sul training set: ' + str(acctrain)
-        acc_test = 'accuratezza sul test set :' + str(acctest)
+        acc_train = '\naccuratezza media per l\'epoca ' + str(e) + ' sul training set: ' + str(acctrain)
+        acc_test = '\naccuratezza sul test set :' + str(acctest)
         print(acc_train)
         print(acc_test)
         f = open('tuning_logs/' + log_name + '.txt', 'a')
@@ -244,8 +244,8 @@ for i in range(11):
         final_accuracy += acctest
 
 f = open('tuning_logs/' + log_name + '.txt', 'a')
-final_accuracy /= 11
-f.write('Accuratezza media finale ' + str(final_accuracy))
+final_accuracy /= 55
+f.write('\nAccuratezza media finale ' + str(final_accuracy))
 f.close()
 new_log_name = log_name.replace("u", str(final_accuracy), 1)
 os.rename('tuning_logs/' + log_name + '.txt', '.tuning_logs/' + new_log_name + '.txt')
