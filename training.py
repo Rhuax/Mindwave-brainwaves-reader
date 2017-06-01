@@ -78,10 +78,10 @@ def create_model():
     model = Sequential()
     model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
     model.add(LSTM(11, return_sequences=True))
-    model.add(Dropout(.1))
+    model.add(Dropout(.2))
     model.add(LSTM(11, return_sequences=True))
-    model.add(Dropout(.1))
-    model.add(LSTM(11))
+    model.add(Dropout(.2))
+    model.add(LSTM(16))
     model.add(Dense(8))
     model.add(Dense(4, activation='softmax'))
     return model
@@ -141,11 +141,11 @@ network.summary()
 if not os.path.isdir('./tuning_logs'):
     os.makedirs('./tuning_logs')
 
-log_name = 'u_' + 'epochs:'+str(epochs) + '_' + datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H:%M:%S')
+log_name = 'u_' + str(epochs) + '_' + datetime.datetime.fromtimestamp(time.time()).strftime('%Y-%m-%d %H-%M-%S')
 
 old_stdoud = sys.stdout
 f = open('tuning_logs/' + log_name + '.txt', 'w+')
-sys.stdout=f
+sys.stdout = f
 print(network.summary())
 f.close()
 sys.stdout = old_stdoud
