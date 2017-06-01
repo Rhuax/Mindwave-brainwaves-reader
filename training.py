@@ -77,10 +77,10 @@ It builds the network, defining its structure
 def create_model():
     model = Sequential()
     model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
-    model.add(LSTM(11, return_sequences=True))
-    model.add(Dropout(.2))
-    model.add(LSTM(11, return_sequences=True))
-    model.add(Dropout(.2))
+    model.add(LSTM(16, return_sequences=True))
+    model.add(Dropout(.1))
+    model.add(LSTM(32, return_sequences=True))
+    model.add(Dropout(.1))
     model.add(LSTM(16))
     model.add(Dense(8))
     model.add(Dense(4, activation='softmax'))
@@ -195,7 +195,7 @@ for i in range(11):
     f.close()
     network = create_model()
 
-    opt = RMSprop(lr=0.0005)
+    opt = RMSprop(lr=0.002)
     network.compile(optimizer=opt, loss='categorical_crossentropy',
                     metrics=['accuracy'])
     print('Fold number: ' + str(i))
@@ -245,10 +245,10 @@ for i in range(11):
 
 f = open('tuning_logs/' + log_name + '.txt', 'a')
 final_accuracy /= 55
-f.write('\nAccuratezza media finale ' + str(final_accuracy))
+f.write('\n\nAccuratezza media finale ' + str(final_accuracy))
 f.close()
 new_log_name = log_name.replace("u", str(final_accuracy), 1)
-os.rename('tuning_logs/' + log_name + '.txt', '.tuning_logs/' + new_log_name + '.txt')
+os.rename('tuning_logs/' + log_name + '.txt', 'tuning_logs/' + new_log_name + '.txt')
 
 f = open('tuning_logs/' + new_log_name + '_architecture', 'w')
 f.write(network.to_json())
