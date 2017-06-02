@@ -195,7 +195,7 @@ for i in range(11):
     f.close()
     network = create_model()
 
-    opt = RMSprop(lr=0.002)
+    opt = RMSprop(lr=0.00005)
     network.compile(optimizer=opt, loss='categorical_crossentropy',
                     metrics=['accuracy'])
     print('Fold number: ' + str(i))
