@@ -76,10 +76,10 @@ It builds the network, defining its structure
 
 def create_model():
     model = Sequential()
-    model.add(LSTM(12, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
-    model.add(LSTM(12, return_sequences=True))
+    model.add(LSTM(16, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
+    model.add(LSTM(16, return_sequences=True))
     model.add(Dropout(.1))
-    model.add(LSTM(12))
+    model.add(LSTM(16))
     model.add(Dense(8))
     model.add(Dense(4, activation='softmax'))
     return model
