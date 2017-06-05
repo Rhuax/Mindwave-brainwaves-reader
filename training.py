@@ -76,12 +76,10 @@ It builds the network, defining its structure
 
 def create_model():
     model = Sequential()
-    model.add(LSTM(11, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
-    model.add(LSTM(16, return_sequences=True))
+    model.add(LSTM(12, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
+    model.add(LSTM(12, return_sequences=True))
     model.add(Dropout(.1))
-    model.add(LSTM(32, return_sequences=True))
-    model.add(Dropout(.1))
-    model.add(LSTM(16))
+    model.add(LSTM(12))
     model.add(Dense(8))
     model.add(Dense(4, activation='softmax'))
     return model
@@ -195,7 +193,7 @@ for i in range(11):
     f.close()
     network = create_model()
 
-    opt = RMSprop(lr=0.05)
+    opt = RMSprop(lr=0.00025)
     network.compile(optimizer=opt, loss='categorical_crossentropy',
                     metrics=['accuracy'])
     print('Fold number: ' + str(i))
@@ -206,6 +204,7 @@ for i in range(11):
         epoch_accuracy = 0
         print('Epoch :' + str(e))
         max_length, sequences = calculate_max_sequence_length(X)
+        max_acc = 0
         for seq in range(sequences - 1):
             # print('sequenza'+str(current_sequence))
             start = sequences_indices[current_sequence]
@@ -241,10 +240,14 @@ for i in range(11):
         f.write(acc_test)
         f.write('---------------------')
         f.close()
-        final_accuracy += acctest
+        if acctest > max_acc:
+            max_acc = acctest
+        if e == 4:
+            final_accuracy += acctest
+            max_acc = 0
 
 f = open('tuning_logs/' + log_name + '.txt', 'a')
-final_accuracy /= 55
+final_accuracy /= 11
 f.write('\n\nAccuratezza media finale ' + str(final_accuracy))
 f.close()
 new_log_name = log_name.replace("u", str(final_accuracy), 1)
