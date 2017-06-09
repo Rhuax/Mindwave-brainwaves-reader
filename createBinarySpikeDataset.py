@@ -3,13 +3,11 @@ names = ['stefano', 'mirella', 'claudio', 'roberta', 'gianluca', 'michel', 'asia
 
 task = ['rilassamento', 'musica_metal', 'logica', 'memoria']
 
-spikeBounds = [25000, 5000, 0, 0, 0, 0, 0, 0]
-
 import os
+
 import numpy as n
 
-# 13persone x 4 task x 11
-okok = 0
+# 13 ppl x 4 task x 11 features
 dataset = n.zeros(shape=[572, 437 + 3])
 dataset.fill(-n.inf)
 index = 0
@@ -26,23 +24,13 @@ for name in names:
                     task_index = task.index(i)
 
             record = n.genfromtxt('records/' + filename, delimiter=',')
-            record = n.delete(record, [-1, -2, -3, -4], 1)  # Del NeuroShit
+            record = n.delete(record, -1, 1)  # Del the muthafucking blink strenght
             for i in range(n.shape(record)[1]):  # For every brain wave
 
-                for j in range(n.shape(record)[0]):
-                    if j > spikeBounds[i]:
-                        j = 1
-                    else:
-                        j = 0
-
-                dataset[index][0 : n.shape(n.array(record[:, i]))[0]] = n.array(record[:, i])
+                dataset[index][0:n.shape(n.array(record[:, i]))[0]] = n.array(record[:, i])
                 dataset[index][-3] = name_index
                 dataset[index][-2] = task_index
                 dataset[index][-1] = i
                 index += 1
 
-n.savetxt('spikeDataset.csv', dataset, fmt='%.3f', delimiter=',')
-#
-# npersone x ntask x onde righe
-# punti+[persona,task,onda]
-#
+n.savetxt('superdataset.csv', dataset, fmt='%.3f', delimiter=',')
