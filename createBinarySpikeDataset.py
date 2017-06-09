@@ -1,3 +1,6 @@
+import numpy as np
+import os
+
 names = ['stefano', 'mirella', 'claudio', 'roberta', 'gianluca', 'michel', 'asia', 'milad',
          'angelo', 'fabiola', 'monica', 'giulia', 'emanuele']
 
@@ -22,8 +25,8 @@ for file in sorted(os.listdir('records/')):
     elif 'memoria' in file:
         desired_output[3] = 1
         
-    for i in range(n.shape(record)[1]):
-        for j in range(n.shape(matrix)[0]):
+    for i in range(np.shape(record)[1]):
+        for j in range(np.shape(matrix)[0]):
             if matrix[i][j] > spikeBounds[i]:
                 matrix[i][j] = 1
             else:
