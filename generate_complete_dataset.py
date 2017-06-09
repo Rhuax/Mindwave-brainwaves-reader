@@ -9,36 +9,35 @@
 # 3-memoria
 #
 import os
+
 import numpy as np
-dataset=None
+
+dataset = None
 
 np.set_printoptions(linewidth=250)
 
-
-
 for file in sorted(os.listdir('records/')):
-    matrix=np.array(np.genfromtxt('records/' + file, delimiter=',', dtype=None))
-    matrix=np.delete(matrix,-1,1) #Remove the blink column
-    desired_output=np.zeros(4)
+    matrix = np.array(np.genfromtxt('records/' + file, delimiter=',', dtype=None))
+    matrix = np.delete(matrix, -1, 1)  # Remove the blink column
+    desired_output = np.zeros(4)
     if 'rilassamento' in file:
-        desired_output[0]=1
+        desired_output[0] = 1
     elif 'musica_metal' in file:
-        desired_output[1]=1
+        desired_output[1] = 1
     elif 'logica' in file:
-        desired_output[2]=1
+        desired_output[2] = 1
     elif 'memoria' in file:
-        desired_output[3]=1
+        desired_output[3] = 1
 
-    matrix=np.concatenate((matrix,np.tile(desired_output,(np.shape(matrix)[0],1))),axis=1)
+    matrix = np.concatenate((matrix, np.tile(desired_output, (np.shape(matrix)[0], 1))), axis=1)
     if dataset is None:
-        dataset=np.array(matrix)
+        dataset = np.array(matrix)
     else:
-        dataset=np.append(dataset,matrix,axis=0)
+        dataset = np.append(dataset, matrix, axis=0)
 
-np.savetxt('ioio.csv',dataset,delimiter=',',fmt='%i')
+np.savetxt('ioio.csv', dataset, delimiter=',', fmt='%i')
 
 #
 # npersone x ntask x onde righe
 # punti+[persona,onda,task]
 #
-
