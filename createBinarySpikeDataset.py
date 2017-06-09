@@ -3,34 +3,36 @@ names = ['stefano', 'mirella', 'claudio', 'roberta', 'gianluca', 'michel', 'asia
 
 task = ['rilassamento', 'musica_metal', 'logica', 'memoria']
 
-import os
+spikeBounds = [25000, 5000, 5000, 5000, 5000, 5000, 5000, 5000]
 
-import numpy as n
+dataset = None
 
-# 13 ppl x 4 task x 11 features
-dataset = n.zeros(shape=[572, 437 + 3])
-dataset.fill(-n.inf)
-index = 0
+np.set_printoptions(linewidth=250)
 
-import glob
+for file in sorted(os.listdir('records/')):
+    matrix = np.array(np.genfromtxt('records/' + file, delimiter=',', dtype=None))
+    matrix = matrix[:, 0:7]
+    desired_output = np.zeros(4)
+    if 'rilassamento' in file:
+        desired_output[0] = 1
+    elif 'musica_metal' in file:
+        desired_output[1] = 1
+    elif 'logica' in file:
+        desired_output[2] = 1
+    elif 'memoria' in file:
+        desired_output[3] = 1
+        
+    for i in range(n.shape(record)[1]):
+        for j in range(n.shape(matrix)[0]):
+            if matrix[i][j] > spikeBounds[i]:
+                matrix[i][j] = 1
+            else:
+                matrix[i][j] = 0
 
-for name in names:
-    for filename in sorted(os.listdir('records/')):
-        if name in filename:
-            name_index = names.index(name)
-            task_index = None
-            for i in task:
-                if i in filename:
-                    task_index = task.index(i)
+    matrix = np.concatenate((matrix, np.tile(desired_output, (np.shape(matrix)[0], 1))), axis=1)
+    if dataset is None:
+        dataset = np.array(matrix)
+    else:
+        dataset = np.append(dataset, matrix, axis=0)
 
-            record = n.genfromtxt('records/' + filename, delimiter=',')
-            record = n.delete(record, -1, 1)  # Del the muthafucking blink strenght
-            for i in range(n.shape(record)[1]):  # For every brain wave
-
-                dataset[index][0:n.shape(n.array(record[:, i]))[0]] = n.array(record[:, i])
-                dataset[index][-3] = name_index
-                dataset[index][-2] = task_index
-                dataset[index][-1] = i
-                index += 1
-
-n.savetxt('superdataset.csv', dataset, fmt='%.3f', delimiter=',')
+n.savetxt('spikeDataset.csv', dataset, fmt='%i', delimiter=',')
