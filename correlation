@@ -3,18 +3,41 @@ import numpy as np
 import pandas as pd
 import matplotlib as plt
 import seaborn as sns
+np.set_printoptions(precision=7, suppress=True)
 tasks=['memoria','logica','rilassamento','musica_metal']
 waves=['delta','theta','lowAlpha','highAlpha','lowBeta','highBeta','lowGamma','midGamma']
 
-means = []
+means = np.zeros((4, 13))
+total_waves = []
 
-def mean_wave(i_wave, squared_waves):
+def mean_wave(total_waves, i_wave, i_person):
+    squared_waves = np.square(total_waves[:])
     s = np.sum(squared_waves[:, i_wave])
     return np.sqrt(s)
 
+def correlation(datasets, seconds):
+    data = np.zeros((8, 8))
+    for i in range(waves.__len__()):
+        for j in range(waves.__len__()):
+            data[i, j] = correlation_wave(i, j, datasets)
+    df = pd.DataFrame(index = waves, columns= waves)
 
-total_waves = np.zeros((0,8))
+    print(df)
 
+def correlation_wave(i_wave, j_wave, datasets, seconds):
+    sumAlpha = np.zeros(seconds, 1)
+    sumBeta = np.zeros(seconds, 1)
+    meanAlpha = means[i_wave]
+    meanBeta = means[j_wave]
+    multiplier = meanAlpha * meanBeta
+    for i in range(seconds):
+        for j in range(13):
+            sumAlpha[i, 0] += datasets(j)[i, i_wave]
+            sumBeta[i, 0] += datasets(j)[i, j_wave]
+    sum = np.multiply(sumAlpha, sumBeta)
+    return np.divide(sum, multiplier)
+
+ntask = 0
 for task in tasks:
     ds = np.zeros((0,8))
     datasets = []
@@ -26,10 +49,27 @@ for task in tasks:
         dims.append(np.shape(dataset)[0])
     mindim = np.min(dims)
     for dataset in datasets:
-        total_waves = np.vstack([total_waves, dataset[:mindim, :]])
+        total_waves.append(dataset[:mindim, :])
     #corr(np.min(dims), ds)
+    for j in range(13):
+        for i in range(waves.__len__()):
+            means[ntask, j] = (mean_wave(total_waves[j], i, j))
+    ntask += 1
 
-squared_waves = np.square(total_waves)
-for i in range(waves.__len__()):
-    means.append(mean_wave(i, squared_waves))
 print(means)
+
+
+for task in tasks:
+    ds = np.zeros((0,8))
+    datasets = []
+    dims = []
+    for filename in os.listdir('records/by_task/'+task):
+        dataset = np.genfromtxt('records/by_task/'+task+'/'+filename,delimiter=',',dtype=np.float)
+        dataset = dataset[:, :-4]
+        dims.append(np.shape(dataset)[0])
+        ds = np.vstack([ds, dataset])
+        datasets.append(dataset)
+    for i in range(waves.__len__()):
+        dataset[:,i] = np.divide(dataset[:,i], means[i])
+    mindim = np.min(dims)
+    correlation(dataset, seconds= mindim)
