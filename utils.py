@@ -1,7 +1,7 @@
 import numpy as np
 import random
 
-dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
+dataset=np.genfromtxt('spikeDataset.csv',delimiter=',',dtype=np.int32)
 
 def create_array_task(dataset, sequences):
     current_output = dataset[0][-4:]

@@ -12,7 +12,7 @@ np.set_printoptions(linewidth=200)
 epochs = 5
 
 batch_size = 5
-dataset = np.genfromtxt('eegdataset.csv', delimiter=',', dtype=np.int32)
+dataset = np.genfromtxt('spikeDataset.csv', delimiter=',', dtype=np.int32)
 
 
 def calculate_max_sequence_length(dataset):
@@ -56,6 +56,7 @@ def k_fold_CV(dataset, folds):
     validate_all = [[0 for x in range(folds)] for y in range(fold_len)]
     for i in range(1, folds):
         val_start = i * fold_len
+        val_start = i * fold_len
         val_end = (i + 1) * fold_len
         train_all[i][:val_start] = dataset[:val_start - 1]
         train_all[i][val_start + 1:] = dataset[val_end + 1:]
@@ -76,7 +77,7 @@ It builds the network, defining its structure
 
 def create_model():
     model = Sequential()
-    model.add(LSTM(8, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 11)))
+    model.add(LSTM(8, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 7)))
     model.add(LSTM(8, return_sequences=True))
     model.add(Dropout(.1))
     model.add(LSTM(8))
