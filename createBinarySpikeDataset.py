@@ -1,5 +1,6 @@
 import numpy as np
 import os
+import matplotlib.pyplot as plt
 
 names = ['stefano', 'mirella', 'claudio', 'roberta', 'gianluca', 'michel', 'asia', 'milad',
          'angelo', 'fabiola', 'monica', 'giulia', 'emanuele']
@@ -26,12 +27,29 @@ for file in sorted(os.listdir('records/')):
         elif 'memoria' in file:
             desired_output[3] = 1
 
-        for i in range(np.shape(matrix)[0]):
+        crop = np.shape(matrix)[0] % 5
+        if crop > 0:
+            for i in range(1, crop + 1):
+                np.delete(matrix, (np.shape(matrix)[0] - i), axis=0)
+
+        print(matrix)
+
+        inc_bounds = np.zeros((np.shape(matrix)[1], 5000))
+        increment = 500
+        for bound in range(0, 1500000, increment):
             for j in range(np.shape(matrix)[1]):
-                if matrix[i][j] > spikeBounds[j]:
-                    matrix[i][j] = 1
-                else:
-                    matrix[i][j] = 0
+                for i in range(np.shape(matrix)[0]):
+                    if matrix[i][j] > spikeBounds[j]:
+                        matrix[i][j] = 1
+                    else:
+                        matrix[i][j] = 0
+                    inc_bounds[j][bound % increment] += matrix[i][j]
+
+        print(inc_bounds)
+
+        for j in range(np.shape(matrix)[1]):
+            plt.plot(inc_bounds[j][:])
+            plt.show()
 
         matrix = np.concatenate((matrix, np.tile(desired_output, (np.shape(matrix)[0], 1))), axis=1)
 
