@@ -29,8 +29,8 @@ for file in sorted(os.listdir('records/')):
 
         crop = np.shape(matrix)[0] % 5
         if crop > 0:
-            for i in range(1, crop + 1):
-                np.delete(matrix, (np.shape(matrix)[0] - i), axis=0)
+            for i in range(1, crop):
+                np.delete(matrix, (np.shape(matrix)[0] - i - 1), axis=0)
 
         print(matrix)
 
@@ -39,7 +39,7 @@ for file in sorted(os.listdir('records/')):
         for bound in range(0, 1500000, increment):
             for j in range(np.shape(matrix)[1]):
                 for i in range(np.shape(matrix)[0]):
-                    if matrix[i][j] > spikeBounds[j]:
+                    if matrix[i][j] > bound:
                         matrix[i][j] = 1
                     else:
                         matrix[i][j] = 0
