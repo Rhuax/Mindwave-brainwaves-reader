@@ -9,7 +9,7 @@ from keras.models import Sequential
 from keras.optimizers import RMSprop, SGD, Adam
 
 np.set_printoptions(linewidth=200)
-epochs = 5
+epochs = 10
 
 batch_size = 5
 dataset = np.genfromtxt('spikeDataset.csv', delimiter=',', dtype=np.int32)
@@ -77,7 +77,7 @@ It builds the network, defining its structure
 
 def create_model():
     model = Sequential()
-    model.add(LSTM(8, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 7)))
+    model.add(LSTM(8, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 8)))
     model.add(LSTM(8, return_sequences=True))
     model.add(Dropout(.1))
     model.add(LSTM(8))

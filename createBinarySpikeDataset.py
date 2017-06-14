@@ -7,12 +7,12 @@ names = ['stefano', 'mirella', 'claudio', 'roberta', 'gianluca', 'michel', 'asia
 
 task = ['rilassamento', 'musica_metal', 'logica', 'memoria']
 
-spikeBounds = [25000, 5000, 5000, 5000, 5000, 5000, 5000, 5000]
+spikeBounds = [945*500, 130*500, 43*500, 38*500, 27*500, 22.5*500, 10.97*500, 10.95*500]
 
 dataset = None
 
 np.set_printoptions(linewidth=250)
-
+"""
 for file in sorted(os.listdir('records/')):
     if "csv" in file:
         matrix = np.array(np.genfromtxt('records/' + file, delimiter=',', dtype=int))
@@ -58,4 +58,39 @@ for file in sorted(os.listdir('records/')):
         else:
             dataset = np.append(dataset, matrix, axis=0)
 
+
+"""
+
+dataset=np.genfromtxt('eegdataset.csv',delimiter=',',dtype=np.int32)
+
+dataset=np.concatenate((dataset[:,0:8],dataset[:,-4:]),axis=1)
+def plot_spikes_distribution():
+    for wave in range(np.shape(dataset)[1]):
+        cazzo=np.zeros(3000)
+        i=0
+        for bound in range(500, 1500000, 500):
+            col = np.copy(dataset[:, wave])
+            for mamt in range(np.shape(col)[0]):
+                if col[mamt]>=bound:
+                    col[mamt]=1
+                else:
+                    col[mamt]=0
+
+            cazzo[i]=np.sum(col)
+            i+=1
+        plt.plot(cazzo)
+        plt.show()
+
+bounds=[]
+
+def create_spike_dataset():
+    for c in range(8):
+        for lamadonnaeputtana in range(np.shape(dataset)[0]):
+            if dataset[lamadonnaeputtana][c] > spikeBounds[c]:
+                dataset[lamadonnaeputtana][c]=1
+            else:
+                dataset[lamadonnaeputtana][c]=0
+
+#plot_spikes_distribution()
+create_spike_dataset()
 np.savetxt('spikeDataset.csv', dataset, fmt='%i', delimiter=',')
