@@ -227,7 +227,7 @@ for i in range(11):
             end = sequences_indices[current_sequence + 1]
             Train = X[start:end]
             if binClass:
-                y_true = None
+                y_true = Train[0,-1]
             else:
                 y_true = np.reshape(Train[0][-4:], (1, 4))
             j = 0
