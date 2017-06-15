@@ -14,7 +14,7 @@ epochs = 10
 binClass = True
 
 batch_size = 5
-dataset = np.genfromtxt('spikeDataset.csv', delimiter=',', dtype=np.int32)
+dataset = np.genfromtxt('spikeBinaryDataset.csv', delimiter=',', dtype=np.int32)
 
 
 def calculate_max_sequence_length(dataset):
