@@ -2,7 +2,6 @@ import datetime
 import os
 import sys
 import time
-
 import h5py
 import numpy as np
 from keras.layers import LSTM, Dense, Dropout
@@ -40,6 +39,21 @@ def calculate_max_sequence_length(dataset):
             cur_seq_length += 1
     return max_seq_length, seqs
 
+
+def create_array_task1(dataset, sequences):
+    current_output = dataset[0][-1]
+    array_task = np.zeros(sequences, dtype=np.int32)
+    line = 0
+    i = 1
+    for row in dataset:
+        actual = row[-1]
+
+        if not np.array_equal(actual, current_output):
+            array_task[i] = line
+            i += 1
+            current_output = actual
+        line += 1
+    return array_task
 
 def create_array_task(dataset, sequences):
     current_output = dataset[0][-4:]
@@ -99,26 +113,32 @@ def create_model():
 
 def calculate_accuracy(set, model):
     m, n_test_sequences = calculate_max_sequence_length(set)
-    indices = create_array_task(set, n_test_sequences)
+    if binClass:
+        indices = create_array_task1(set, n_test_sequences)
+    else:
+        indices = create_array_task(set, n_test_sequences)
     current_sequence_test = 0
     total_accuracy = 0
     for seqa in range(n_test_sequences - 1):
         starta = indices[current_sequence_test]
         enda = indices[current_sequence_test + 1]
 
-        y_true = np.reshape(set[starta, -4:], (1, 4))
-        # print('y è :', end='')
-        # print(y_true)
-
-        batch_x = np.expand_dims(set[starta:enda, 0:-4], 0)
-
+        if binClass:
+            y_true = set[starta, -1]
+            #batch_x = np.expand_dims(set[starta:enda, 0:-1], 0)
+        else:
+            y_true = np.reshape(set[starta, -4:], (1, 4))
+            #batch_x = np.expand_dims(set[starta:enda, 0:-4], 0)
         k = 0
         true_positives = 0
         while k < (enda - starta) / batch_size:
-            batch_x = np.expand_dims(set[starta + k * batch_size:starta + ((k + 1) * batch_size), 0:-4], 0)
+            if binClass:
+                batch_x = np.expand_dims(set[starta + k * batch_size:starta + ((k + 1) * batch_size), 0:-1], 0)
+            else:
+                batch_x = np.expand_dims(set[starta + k * batch_size:starta + ((k + 1) * batch_size), 0:-4], 0)
             output = model.predict_on_batch(batch_x)
             if binClass:
-                if (output > 0.5 and y_true == 1) or (output < 0.5 and y_true == 0):
+                if (output[0] > 0.5 and y_true == 1) or (output[0] < 0.5 and y_true == 0):
                     true_positives += 1
             else:
                 r_output = np.zeros((1, 4))
@@ -136,7 +156,10 @@ def calculate_accuracy(set, model):
 
 
 max_length, sequences = calculate_max_sequence_length(dataset)
-sequences_indices = create_array_task(dataset, sequences=sequences)
+if binClass:
+    sequences_indices = create_array_task1(dataset, sequences=sequences)
+else:
+    sequences_indices = create_array_task(dataset, sequences=sequences)
 
 test_set = dataset[sequences_indices[-8]:]
 dataset = dataset[:sequences_indices[-8]]
@@ -209,9 +232,9 @@ for i in range(11):
     f.close()
     network = create_model()
 
-    opt = RMSprop(lr=0.00025)
-    network.compile(optimizer=opt, loss='categorical_crossentropy',
-                    metrics=['accuracy'])
+    opt = RMSprop(lr=0.0005)
+    network.compile(optimizer=opt, loss='mean_absolute_error',
+                    metrics=['accuracy'])  # mean_absolute_error
     print('Fold number: ' + str(i))
     X = np.genfromtxt('cross_validation/training_' + str(i) + '.csv', delimiter=',', dtype=np.int32)
     Y = np.genfromtxt('cross_validation/testing_' + str(i) + '.csv', delimiter=',', dtype=np.int32)
@@ -227,7 +250,7 @@ for i in range(11):
             end = sequences_indices[current_sequence + 1]
             Train = X[start:end]
             if binClass:
-                y_true = Train[0,-1]
+                y_true = np.reshape(Train[0][-1], (1, 1))
             else:
                 y_true = np.reshape(Train[0][-4:], (1, 4))
             j = 0
