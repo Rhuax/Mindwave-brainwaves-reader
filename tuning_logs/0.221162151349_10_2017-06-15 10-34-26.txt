@@ -1,0 +1,254 @@
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_1 (LSTM)                (1, 5, 8)                 544       
+_________________________________________________________________
+lstm_2 (LSTM)                (1, 5, 8)                 544       
+_________________________________________________________________
+dropout_1 (Dropout)          (1, 5, 8)                 0         
+_________________________________________________________________
+lstm_3 (LSTM)                (1, 8)                    544       
+_________________________________________________________________
+dense_1 (Dense)              (1, 8)                    72        
+_________________________________________________________________
+dense_2 (Dense)              (1, 4)                    36        
+=================================================================
+Total params: 1,740
+Trainable params: 1,740
+Non-trainable params: 0
+_________________________________________________________________
+None
+
+Fold 0
+accuratezza media per l'epoca 0 sul training set: 0.369984870244
+accuratezza sul test set :0.125---------------------
+accuratezza media per l'epoca 1 sul training set: 0.336651257614
+accuratezza sul test set :0.125---------------------
+accuratezza media per l'epoca 2 sul training set: 0.356495352697
+accuratezza sul test set :0.125---------------------
+accuratezza media per l'epoca 3 sul training set: 0.397594190282
+accuratezza sul test set :0.125---------------------
+accuratezza media per l'epoca 4 sul training set: 0.46843776255
+accuratezza sul test set :0.141025641026---------------------
+accuratezza media per l'epoca 5 sul training set: 0.469243300055
+accuratezza sul test set :0.125---------------------
+accuratezza media per l'epoca 6 sul training set: 0.488019627262
+accuratezza sul test set :0.125228937729---------------------
+accuratezza media per l'epoca 7 sul training set: 0.504317807069
+accuratezza sul test set :0.128205128205---------------------
+accuratezza media per l'epoca 8 sul training set: 0.547774608708
+accuratezza sul test set :0.132783882784---------------------
+accuratezza media per l'epoca 9 sul training set: 0.550830342067
+accuratezza sul test set :0.151327838828---------------------
+Fold 1
+accuratezza media per l'epoca 0 sul training set: 0.271560083588
+accuratezza sul test set :0.297099749844---------------------
+accuratezza media per l'epoca 1 sul training set: 0.252113553337
+accuratezza sul test set :0.260756816461---------------------
+accuratezza media per l'epoca 2 sul training set: 0.280423112803
+accuratezza sul test set :0.331217580291---------------------
+accuratezza media per l'epoca 3 sul training set: 0.368699865957
+accuratezza sul test set :0.309387464803---------------------
+accuratezza media per l'epoca 4 sul training set: 0.414903839224
+accuratezza sul test set :0.254892037787---------------------
+accuratezza media per l'epoca 5 sul training set: 0.431436845039
+accuratezza sul test set :0.23951048951---------------------
+accuratezza media per l'epoca 6 sul training set: 0.425230109973
+accuratezza sul test set :0.207235345955---------------------
+accuratezza media per l'epoca 7 sul training set: 0.426534602718
+accuratezza sul test set :0.198852976292---------------------
+accuratezza media per l'epoca 8 sul training set: 0.429489354324
+accuratezza sul test set :0.192016317016---------------------
+accuratezza media per l'epoca 9 sul training set: 0.424603783788
+accuratezza sul test set :0.188228438228---------------------
+Fold 2
+accuratezza media per l'epoca 0 sul training set: 0.257589464643
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 1 sul training set: 0.259812826779
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 2 sul training set: 0.309366318561
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 3 sul training set: 0.34294190204
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 4 sul training set: 0.414979418433
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 5 sul training set: 0.405587041935
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 6 sul training set: 0.428646954992
+accuratezza sul test set :0.133731211317---------------------
+accuratezza media per l'epoca 7 sul training set: 0.439518982281
+accuratezza sul test set :0.123563218391---------------------
+accuratezza media per l'epoca 8 sul training set: 0.42061052456
+accuratezza sul test set :0.210506420952---------------------
+accuratezza media per l'epoca 9 sul training set: 0.478111217425
+accuratezza sul test set :0.233974358974---------------------
+Fold 3
+accuratezza media per l'epoca 0 sul training set: 0.237206400403
+accuratezza sul test set :0.21910405486---------------------
+accuratezza media per l'epoca 1 sul training set: 0.268156799005
+accuratezza sul test set :0.217576028623---------------------
+accuratezza media per l'epoca 2 sul training set: 0.266949338874
+accuratezza sul test set :0.221116577221---------------------
+accuratezza media per l'epoca 3 sul training set: 0.268653899258
+accuratezza sul test set :0.223725402504---------------------
+accuratezza media per l'epoca 4 sul training set: 0.267412624092
+accuratezza sul test set :0.244148777579---------------------
+accuratezza media per l'epoca 5 sul training set: 0.291057412064
+accuratezza sul test set :0.252906976744---------------------
+accuratezza media per l'epoca 6 sul training set: 0.374928946418
+accuratezza sul test set :0.252906976744---------------------
+accuratezza media per l'epoca 7 sul training set: 0.432518701185
+accuratezza sul test set :0.252906976744---------------------
+accuratezza media per l'epoca 8 sul training set: 0.460249125414
+accuratezza sul test set :0.252906976744---------------------
+accuratezza media per l'epoca 9 sul training set: 0.464659052664
+accuratezza sul test set :0.250528978398---------------------
+Fold 4
+accuratezza media per l'epoca 0 sul training set: 0.249479997881
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 1 sul training set: 0.234161954178
+accuratezza sul test set :0.291003536693---------------------
+accuratezza media per l'epoca 2 sul training set: 0.280217475063
+accuratezza sul test set :0.310897435897---------------------
+accuratezza media per l'epoca 3 sul training set: 0.313905722553
+accuratezza sul test set :0.230769230769---------------------
+accuratezza media per l'epoca 4 sul training set: 0.409948460777
+accuratezza sul test set :0.230769230769---------------------
+accuratezza media per l'epoca 5 sul training set: 0.416015766585
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 6 sul training set: 0.386934949558
+accuratezza sul test set :0.253289473684---------------------
+accuratezza media per l'epoca 7 sul training set: 0.331490631152
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 8 sul training set: 0.352993854603
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 9 sul training set: 0.318167590498
+accuratezza sul test set :0.25---------------------
+Fold 5
+accuratezza media per l'epoca 0 sul training set: 0.258700998163
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 1 sul training set: 0.26728443865
+accuratezza sul test set :0.218623481781---------------------
+accuratezza media per l'epoca 2 sul training set: 0.361161695558
+accuratezza sul test set :0.229504048583---------------------
+accuratezza media per l'epoca 3 sul training set: 0.371572004175
+accuratezza sul test set :0.342655049968---------------------
+accuratezza media per l'epoca 4 sul training set: 0.429772453964
+accuratezza sul test set :0.217718715393---------------------
+accuratezza media per l'epoca 5 sul training set: 0.42051623798
+accuratezza sul test set :0.226178763097---------------------
+accuratezza media per l'epoca 6 sul training set: 0.493882809576
+accuratezza sul test set :0.203078413834---------------------
+accuratezza media per l'epoca 7 sul training set: 0.524100360714
+accuratezza sul test set :0.232222719141---------------------
+accuratezza media per l'epoca 8 sul training set: 0.490665872389
+accuratezza sul test set :0.172840531561---------------------
+accuratezza media per l'epoca 9 sul training set: 0.527252467414
+accuratezza sul test set :0.248248360167---------------------
+Fold 6
+accuratezza media per l'epoca 0 sul training set: 0.301621386474
+accuratezza sul test set :0.227564102564---------------------
+accuratezza media per l'epoca 1 sul training set: 0.389028516081
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 2 sul training set: 0.414302972762
+accuratezza sul test set :0.221153846154---------------------
+accuratezza media per l'epoca 3 sul training set: 0.430834279268
+accuratezza sul test set :0.185897435897---------------------
+accuratezza media per l'epoca 4 sul training set: 0.499538884197
+accuratezza sul test set :0.214663461538---------------------
+accuratezza media per l'epoca 5 sul training set: 0.529002018094
+accuratezza sul test set :0.26266025641---------------------
+accuratezza media per l'epoca 6 sul training set: 0.494036188171
+accuratezza sul test set :0.236939102564---------------------
+accuratezza media per l'epoca 7 sul training set: 0.478006443311
+accuratezza sul test set :0.204887820513---------------------
+accuratezza media per l'epoca 8 sul training set: 0.493460973873
+accuratezza sul test set :0.24671474359---------------------
+accuratezza media per l'epoca 9 sul training set: 0.502642329226
+accuratezza sul test set :0.25---------------------
+Fold 7
+accuratezza media per l'epoca 0 sul training set: 0.243011031941
+accuratezza sul test set :0.168085997487---------------------
+accuratezza media per l'epoca 1 sul training set: 0.324087738924
+accuratezza sul test set :0.253673391037---------------------
+accuratezza media per l'epoca 2 sul training set: 0.341543738195
+accuratezza sul test set :0.259309995812---------------------
+accuratezza media per l'epoca 3 sul training set: 0.348217666266
+accuratezza sul test set :0.261078342408---------------------
+accuratezza media per l'epoca 4 sul training set: 0.343269918571
+accuratezza sul test set :0.260746777421---------------------
+accuratezza media per l'epoca 5 sul training set: 0.370599685361
+accuratezza sul test set :0.247815742938---------------------
+accuratezza media per l'epoca 6 sul training set: 0.404926746283
+accuratezza sul test set :0.251020871143---------------------
+accuratezza media per l'epoca 7 sul training set: 0.422819129521
+accuratezza sul test set :0.252457652753---------------------
+accuratezza media per l'epoca 8 sul training set: 0.425361539124
+accuratezza sul test set :0.255331215971---------------------
+accuratezza media per l'epoca 9 sul training set: 0.41037466453
+accuratezza sul test set :0.255331215971---------------------
+Fold 8
+accuratezza media per l'epoca 0 sul training set: 0.260919173233
+accuratezza sul test set :0.256024096386---------------------
+accuratezza media per l'epoca 1 sul training set: 0.388700219966
+accuratezza sul test set :0.25---------------------
+accuratezza media per l'epoca 2 sul training set: 0.428003185522
+accuratezza sul test set :0.243505398111---------------------
+accuratezza media per l'epoca 3 sul training set: 0.467301748658
+accuratezza sul test set :0.248136422207---------------------
+accuratezza media per l'epoca 4 sul training set: 0.506195081765
+accuratezza sul test set :0.248136422207---------------------
+accuratezza media per l'epoca 5 sul training set: 0.532596838262
+accuratezza sul test set :0.248136422207---------------------
+accuratezza media per l'epoca 6 sul training set: 0.518805813177
+accuratezza sul test set :0.248136422207---------------------
+accuratezza media per l'epoca 7 sul training set: 0.499117354608
+accuratezza sul test set :0.248136422207---------------------
+accuratezza media per l'epoca 8 sul training set: 0.47964811392
+accuratezza sul test set :0.248136422207---------------------
+accuratezza media per l'epoca 9 sul training set: 0.4692283008
+accuratezza sul test set :0.248136422207---------------------
+Fold 9
+accuratezza media per l'epoca 0 sul training set: 0.2430882126
+accuratezza sul test set :0.13141025641---------------------
+accuratezza media per l'epoca 1 sul training set: 0.366816400475
+accuratezza sul test set :0.24185520362---------------------
+accuratezza media per l'epoca 2 sul training set: 0.379439743208
+accuratezza sul test set :0.245060331825---------------------
+accuratezza media per l'epoca 3 sul training set: 0.364865692372
+accuratezza sul test set :0.245060331825---------------------
+accuratezza media per l'epoca 4 sul training set: 0.385251541399
+accuratezza sul test set :0.245060331825---------------------
+accuratezza media per l'epoca 5 sul training set: 0.41083230595
+accuratezza sul test set :0.245060331825---------------------
+accuratezza media per l'epoca 6 sul training set: 0.44314659661
+accuratezza sul test set :0.251470588235---------------------
+accuratezza media per l'epoca 7 sul training set: 0.381439389755
+accuratezza sul test set :0.24358974359---------------------
+accuratezza media per l'epoca 8 sul training set: 0.365797033885
+accuratezza sul test set :0.233974358974---------------------
+accuratezza media per l'epoca 9 sul training set: 0.323863330964
+accuratezza sul test set :0.238650075415---------------------
+Fold 10
+accuratezza media per l'epoca 0 sul training set: 0.235736781773
+accuratezza sul test set :0.125---------------------
+accuratezza media per l'epoca 1 sul training set: 0.265469633095
+accuratezza sul test set :0.265562248996---------------------
+accuratezza media per l'epoca 2 sul training set: 0.310249041175
+accuratezza sul test set :0.126780749371---------------------
+accuratezza media per l'epoca 3 sul training set: 0.336391272629
+accuratezza sul test set :0.112456419083---------------------
+accuratezza media per l'epoca 4 sul training set: 0.365894785151
+accuratezza sul test set :0.125622269297---------------------
+accuratezza media per l'epoca 5 sul training set: 0.365124427038
+accuratezza sul test set :0.135388807979---------------------
+accuratezza media per l'epoca 6 sul training set: 0.376130968414
+accuratezza sul test set :0.130291495653---------------------
+accuratezza media per l'epoca 7 sul training set: 0.374759767103
+accuratezza sul test set :0.131797519749---------------------
+accuratezza media per l'epoca 8 sul training set: 0.373951760471
+accuratezza sul test set :0.141412904365---------------------
+accuratezza media per l'epoca 9 sul training set: 0.360927360258
+accuratezza sul test set :0.131431219383---------------------
+
+Accuratezza media finale 0.221162151349
