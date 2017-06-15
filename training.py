@@ -1,15 +1,17 @@
-import numpy as np
+import datetime
 import os
 import sys
 import time
-import datetime
 
+import h5py
+import numpy as np
 from keras.layers import LSTM, Dense, Dropout
 from keras.models import Sequential
 from keras.optimizers import RMSprop, SGD, Adam
 
 np.set_printoptions(linewidth=200)
 epochs = 10
+binClass = True
 
 batch_size = 5
 dataset = np.genfromtxt('spikeDataset.csv', delimiter=',', dtype=np.int32)
@@ -18,10 +20,16 @@ dataset = np.genfromtxt('spikeDataset.csv', delimiter=',', dtype=np.int32)
 def calculate_max_sequence_length(dataset):
     max_seq_length = 0
     cur_seq_length = 0
-    current_output = dataset[0][-4:]
+    if binClass:
+        current_output = dataset[0][-1]
+    else:
+        current_output = dataset[0][-4:]
     seqs = 1
     for row in dataset:
-        o = row[-4:]
+        if binClass:
+            o = row[-1]
+        else:
+            o = row[-4:]
         if not np.array_equal(o, current_output):
             seqs += 1
             if cur_seq_length > max_seq_length:
@@ -82,7 +90,10 @@ def create_model():
     model.add(Dropout(.1))
     model.add(LSTM(8))
     model.add(Dense(8))
-    model.add(Dense(4, activation='softmax'))
+    if binClass:
+        model.add(Dense(1, activation='sigmoid'))
+    else:
+        model.add(Dense(4, activation='softmax'))
     return model
 
 
@@ -106,10 +117,14 @@ def calculate_accuracy(set, model):
         while k < (enda - starta) / batch_size:
             batch_x = np.expand_dims(set[starta + k * batch_size:starta + ((k + 1) * batch_size), 0:-4], 0)
             output = model.predict_on_batch(batch_x)
-            r_output = np.zeros((1, 4))
-            r_output[0][np.argmax(output)] = 1
-            if np.array_equal(r_output, y_true):
-                true_positives += 1
+            if binClass:
+                if (output > 0.5 and y_true == 1) or (output < 0.5 and y_true == 0):
+                    true_positives += 1
+            else:
+                r_output = np.zeros((1, 4))
+                r_output[0][np.argmax(output)] = 1
+                if np.array_equal(r_output, y_true):
+                    true_positives += 1
 
             k += 1
         # print('accuracy : ',end='')
@@ -211,12 +226,18 @@ for i in range(11):
             start = sequences_indices[current_sequence]
             end = sequences_indices[current_sequence + 1]
             Train = X[start:end]
-            y_true = np.reshape(Train[0][-4:], (1, 4))
+            if binClass:
+                y_true = None
+            else:
+                y_true = np.reshape(Train[0][-4:], (1, 4))
             j = 0
             err = 0
             acc = 0
-            while (j < (end - start) / batch_size):
-                batch_x = Train[j * batch_size:(j + 1) * batch_size, 0:-4]
+            while j < (end - start) / batch_size:
+                if binClass:
+                    batch_x = Train[j * batch_size:(j + 1) * batch_size, 0:-1]
+                else:
+                    batch_x = Train[j * batch_size:(j + 1) * batch_size, 0:-4]
                 batch_x = np.expand_dims(batch_x, 0)
                 loss, accuracy = network.train_on_batch(batch_x, y_true)
                 # print('Accuracy: '+str(accuracy))
