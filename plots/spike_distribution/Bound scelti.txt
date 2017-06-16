@@ -1,0 +1,10 @@
+delta: 945*500
+theta: 130*500
+low alpha: 43*500 
+high alpha: 38*500
+low beta: 27*500
+high beta: 22.5*500
+low gamma: 10.97*500
+mid gamma: 10.95*500
+
+i valori sono moltiplicati per 500 perché il bound è stato incrementato con uno step di 500, considerando un range da 0 a 1.500.000
