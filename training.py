@@ -234,7 +234,7 @@ for i in range(11):
 
     opt = RMSprop(lr=0.0005)
     network.compile(optimizer=opt, loss='mean_absolute_error',
-                    metrics=['accuracy'])  # mean_absolute_error
+                    metrics=['accuracy'])  # mean_absolute_error or squared
     print('Fold number: ' + str(i))
     X = np.genfromtxt('cross_validation/training_' + str(i) + '.csv', delimiter=',', dtype=np.int32)
     Y = np.genfromtxt('cross_validation/testing_' + str(i) + '.csv', delimiter=',', dtype=np.int32)
