@@ -100,10 +100,10 @@ It builds the network, defining its structure
 def create_model():
     model = Sequential()
     model.add(LSTM(8, stateful=True, return_sequences=True, batch_input_shape=(1, batch_size, 8)))
-    model.add(LSTM(8, return_sequences=True))
-    model.add(Dropout(.1))
+    #model.add(LSTM(8, return_sequences=True))
+    #model.add(Dropout(.1))
     model.add(LSTM(8))
-    model.add(Dense(8))
+    #model.add(Dense(8))
     if binClass:
         model.add(Dense(1, activation='sigmoid'))
     else:
@@ -232,7 +232,6 @@ for i in range(11):
     f.close()
     network = create_model()
 
-    opt = RMSprop(lr=0.0005)
     network.compile(optimizer=opt, loss='mean_absolute_error',
                     metrics=['accuracy'])  # mean_absolute_error or squared
     print('Fold number: ' + str(i))
