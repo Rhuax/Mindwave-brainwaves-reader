@@ -232,6 +232,7 @@ for i in range(11):
     f.close()
     network = create_model()
 
+    opt = RMSprop(lr=0.0015)
     network.compile(optimizer=opt, loss='mean_absolute_error',
                     metrics=['accuracy'])  # mean_absolute_error or squared
     print('Fold number: ' + str(i))
