@@ -11,9 +11,9 @@ def stoppa(a):
 #Logica 200 da 0
 #Memoria 200 da 0
 
-person_name = input('Nome dell\'utente: ')
-task_name = input('Nome del task: ')
-task_duration = input('Durata del task(sec):')
+person_name = "a"#input('Nome dell\'utente: ')
+task_name =  "a"#input('Nome del task: ')
+task_duration =  "20"#input('Durata del task(sec):')
 
 record = NeuroPy("COM3", person_name=person_name, task_name=task_name, task_duration=task_duration)
 threading.Timer(int(task_duration), stoppa, [record]).start()

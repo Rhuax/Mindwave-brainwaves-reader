@@ -334,6 +334,7 @@ class NeuroPy(object):
             self.__history=np.append(self.__history, [[self.delta, self.theta, self.lowAlpha, self.highAlpha, self.lowBeta,
                                         self.highBeta, self.lowGamma, self.midGamma,self.attention,self.meditation,
                                                        self.rawValue,self.blinkStrength]], axis=0)
+        print(self.__history[-1])
 
     '''Saves all read values to csv'''
     def save(self):
